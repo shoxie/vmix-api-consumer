@@ -208,7 +208,7 @@ const ConfigModal = ({ matchData }: { matchData: MatchData }) => {
       
         return recursiveSearch(obj, []);
       }
-
+//
     function onVMixFunctionSelect(conf: any, key: string) {
         setConfig([...config, { ...conf, Value: findKeyPathLodash(matchData, key)?.join('.') }]);
         console.log('config', config)
