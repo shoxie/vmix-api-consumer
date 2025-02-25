@@ -1,0 +1,18 @@
+{
+    "authkey": "",
+    "matchId": "607080172897568968",
+    "pairConfigs": [
+        {
+            "Value": "data.state",
+            "Function": "SetText",
+            "Input": "f4668bba-b657-4a16-a49d-0e66ce9d6617",
+            "SelectedName": "TextBlock2.Text"
+        },
+        {
+            "Value": "dataid",
+            "Function": "SetText",
+            "Input": "f4668bba-b657-4a16-a49d-0e66ce9d6617",
+            "SelectedName": "TextBlock1.Text"
+        }
+    ]
+}
