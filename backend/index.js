@@ -53,4 +53,15 @@ const sendDataToVMix = async (data) => {
     }))
 }
 
+const getLiveMatch = () => {
+    axiosClient.get(`/battlelist/playing`).then(response => {
+        console.log(response.data)
+        // beginLiveMatch(response.data.battleids[0])
+    }).catch(error => {
+        console.log(error)
+    })
+}
+
+getLiveMatch();
+
 beginLiveMatch(config.matchId);
