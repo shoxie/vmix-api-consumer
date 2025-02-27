@@ -1,18 +1,24 @@
 {
     "authkey": "",
-    "matchId": "607080172897568968",
+    "matchId": "",
     "pairConfigs": [
         {
             "Value": "data.state",
             "Function": "SetText",
-            "Input": "f4668bba-b657-4a16-a49d-0e66ce9d6617",
+            "Input": "d4c74b4a-7df4-45b4-b50f-f91f2fde7dcb",
             "SelectedName": "TextBlock2.Text"
         },
         {
             "Value": "dataid",
             "Function": "SetText",
-            "Input": "f4668bba-b657-4a16-a49d-0e66ce9d6617",
+            "Input": "d4c74b4a-7df4-45b4-b50f-f91f2fde7dcb",
             "SelectedName": "TextBlock1.Text"
+        },
+        {
+            "Value": "https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_4f970eb4b44b8c9fff2c511d8e856ff4.png",
+            "Function": "SetImage",
+            "Input": "d4c74b4a-7df4-45b4-b50f-f91f2fde7dcb",
+            "SelectedName": "Player1.Source"
         }
     ]
 }

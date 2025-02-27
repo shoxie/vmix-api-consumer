@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "axios": "^1.7.9",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "node-vmix": "^1.7.1",
+    "vmix-js-utils": "^4.0.19",
+    "xhr2": "^0.2.1"
   }
 }
