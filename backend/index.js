@@ -36,16 +36,16 @@ cloudinary.config({
 });
 // CLOUDINARY_URL=cloudinary://914164364216995:l_OvqBX4EhF0-0cO9KWXHxBQ77I@dgwxadfh7
 const playerPositionToVMixInput = {
-    1: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
-    2: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
-    3: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
-    4: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
-    5: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
-    6: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
-    7: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
-    8: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
-    9: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
-    10: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9'
+    1: '1146c7b0-c453-4cde-9af8-07523c3f9942',
+    2: '1146c7b0-c453-4cde-9af8-07523c3f9942',
+    3: '1146c7b0-c453-4cde-9af8-07523c3f9942',
+    4: '1146c7b0-c453-4cde-9af8-07523c3f9942',
+    5: '1146c7b0-c453-4cde-9af8-07523c3f9942',
+    6: '1146c7b0-c453-4cde-9af8-07523c3f9942',
+    7: '1146c7b0-c453-4cde-9af8-07523c3f9942',
+    8: '1146c7b0-c453-4cde-9af8-07523c3f9942',
+    9: '1146c7b0-c453-4cde-9af8-07523c3f9942',
+    10: '1146c7b0-c453-4cde-9af8-07523c3f9942'
 };
 
 var banList = [];
@@ -203,10 +203,10 @@ const handleMatchEvent = async (event, matchData) => {
 }
 
 const getHeroData = async (heroid) => {
-    heroid = heroid.toString().padStart(3, '0');
-    const response = await axios.get(`https://mlbb-wiki-api.vercel.app/api/heroes/HE${heroid}`);
+    const paddedHeroid = heroid.toString().padStart(3, '0');
+    const response = await axios.get(`https://mlbb-wiki-api.vercel.app/api/heroes/HE${paddedHeroid}`);
     // get full image using cloudinary
-    const heroPortraitURL = cloudinary.url(`${heroid}`);
+    const heroPortraitURL = cloudinary.url(`${heroid}.png`);
     const temp = { ...response.data.data, portrait: heroPortraitURL };
     // console.log('temp', temp)
     return temp;
