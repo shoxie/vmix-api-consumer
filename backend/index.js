@@ -9,35 +9,37 @@ const config = require('./config.json');
 var dataid = 1000;
 var matchInterval;
 var isInvalidMatch = false;
+var isTeamNameUpdated = false;
+var isBanListUpdated = false;
 
 const connection = new ConnectionTCP('localhost')
 
 connection.on('xml', (xmlData) => {
-  const xmlContent = XmlApi.DataParser.parse(xmlData)
+    const xmlContent = XmlApi.DataParser.parse(xmlData)
 
-  const inputsRawData = XmlApi.Inputs.extractInputsFromXML(xmlContent)
-  const inputs = XmlApi.Inputs.map(inputsRawData)
+    const inputsRawData = XmlApi.Inputs.extractInputsFromXML(xmlContent)
+    const inputs = XmlApi.Inputs.map(inputsRawData)
 
-  console.log(inputs)
+    console.log(inputs)
 })
 
 connection.on('connect', () => {
-  console.log('Connected')
+    console.log('Connected')
 
-  connection.send('XML')
+    connection.send('XML')
 })
 
 const playerPositionToVMixInput = {
-    1: 'Input1', 
-    2: 'Input2',
-    3: 'Input2',
-    4: 'Input2',
-    5: 'Input2',
-    6: 'Input2',
-    7: 'Input2',
-    8: 'Input2',
-    9: 'Input2',
-    10: 'Input10'
+    1: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
+    2: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
+    3: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
+    4: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
+    5: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
+    6: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
+    7: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
+    8: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
+    9: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
+    10: '2cfcb547-5ca4-4f56-85b4-859f3be3831d'
 };
 
 var banList = [];
@@ -62,17 +64,25 @@ const beginLiveMatch = async (matchId) => {
     console.log(`Begin live match ${matchId}`)
     matchInterval = setInterval(() => {
         axiosClient.get(`/battledata?battleid=${matchId}&dataid=${dataid}`).then(response => {
-            // sendDataToVMix(response.data);
 
             handleMatchEvent(response.data.data.state, response.data.data);
 
-            console.log(response.data.data.camp_list[0].ban_hero_list)
-            console.log(response.data.data.state)
+            dataid = response.data.dataid;
+            console.log('response.data.dataid', response.data.dataid)
+
+            if (!isTeamNameUpdated) {
+                isTeamNameUpdated = true;
+                updateTeamName(response.data.data.camp_list[0].team_name, response.data.data.camp_list[1].team_name);
+            }
+            if (!isBanListUpdated) {
+                isBanListUpdated = true;
+                updateBanList(response.data.data.camp_list[0], response.data.data.camp_list[1]);
+            }
         }).catch(error => {
             // console.error(error)
             isInvalidMatch = true;
         })
-    }, 1000)
+    }, 5000)
 }
 
 const stopLiveMatch = () => {
@@ -101,7 +111,32 @@ const VMixUrlConstructor = (config, data) => {
         console.log(`${baseUrl}/?Function=${functionString}&Input=${inputString}&Value=${valueString}`)
         return `${baseUrl}/?Function=${functionString}&Input=${inputString}&SelectedName=${selectedName}&Value=${valueString}`;
     }
-    return `${baseUrl}/?Function=${functionString}&Input=${inputString}&SelectedName=${selectedName}&Value=${valueString}`;
+
+    return `${baseUrl}/?Function=${functionString}&Input=${inputString}&SelectedName=${selectedName}&Value=${encodeURIComponent(valueString)}`;
+
+}
+
+const updateTeamName = (teamName1, teamName2) => {
+    sendVMixCommand(`SetText&Input=${playerPositionToVMixInput[1]}&SelectedName=TextBlock2.Text&Value=${teamName1}`);
+    sendVMixCommand(`SetText&Input=${playerPositionToVMixInput[2]}&SelectedName=TextBlock1.Text&Value=${teamName2}`);
+}
+
+const updateBanList = async (camp_list_1, camp_list_2) => {
+    // // update ban list and show in vmix in case of late script running
+    // const newBanHero = _.difference(camp_list_1.ban_hero_list, banList);
+    // if (newBanHero.length > 0) {
+    //     banList.push(newBanHero[0]);
+    //     var { data: heroData } = await getHeroData(newBanHero[0]);
+    //     updateVMixOverlay(banList.length, "", 'Banning', newBanHero[0], heroData.icon);
+    // }
+    // // get newly added ban hero
+    // const newBanHero2 = _.difference(camp_list_2.ban_hero_list, banList);
+    // if (newBanHero2.length > 0) {
+    //     banList.push(newBanHero2[0]);
+    //     var { data: heroData } = await getHeroData(newBanHero2[0]);
+    //     console.log('heroData', heroData)
+    //     updateVMixOverlay(banList.length, "", 'Banning', newBanHero2[0], heroData.icon);
+    // }
 }
 
 const handleMatchEvent = async (event, matchData) => {
@@ -112,41 +147,41 @@ const handleMatchEvent = async (event, matchData) => {
     }
 
     if (event === 'ban' || event === 'pick') {
-        const camp_list_1 = matchData.camp_list[0];
-        const camp_list_2 = matchData.camp_list[1];
-        
-        // get newly added ban hero
-        const newBanHero = _.difference(camp_list_1.ban_hero_list, banList);
-        if (newBanHero.length > 0) {
-            banList.push(newBanHero[0]);
-            console.log('ban hero', newBanHero[0]);
-        }
-        // get newly added ban hero
-        const newBanHero2 = _.difference(camp_list_2.ban_hero_list, banList);
-        if (newBanHero2.length > 0) {
-            banList.push(newBanHero2[0]);
-            console.log('ban hero', newBanHero2[0]);
-        }
+        // const camp_list_1 = matchData.camp_list[0];
+        // const camp_list_2 = matchData.camp_list[1];
 
+        // // get newly added ban hero
+        // const newBanHero = _.difference(camp_list_1.ban_hero_list, banList);
+        // if (newBanHero.length > 0) {
+        //     banList.push(newBanHero[0]);
+        //     console.log('ban hero', newBanHero[0]);
+        // }
+        // // get newly added ban hero
+        // const newBanHero2 = _.difference(camp_list_2.ban_hero_list, banList);
+        // if (newBanHero2.length > 0) {
+        //     banList.push(newBanHero2[0]);
+        //     console.log('ban hero', newBanHero2[0]);
+        // }
+        // console.log('matchData', matchData)
         matchData.camp_list.forEach(camp => {
             camp.player_list.forEach(async player => {
-                if (player.picking || player.banning) {
-                    const heroId = player.picking ? player.heroid : player.ban_heroid;
+                // console.log('player', player)
+                const heroId = player.picking ? player.heroid : player.ban_heroid;
 
-                    if (heroId == 0) {
-                        return;
-                    }
-                    
-                    const heroData = await getHeroData(heroId);
+                console.log('heroId', heroId)
+
+                if (heroId !== 0) {
+                    const { data: heroData } = await getHeroData(heroId);
                     const heroName = heroData.hero_name;
-                    const heroImageUrl = heroData.hero_image;
-                    const action = player.picking ? 'Picking' : 'Banning';
-                    // const playerName = player.name;
+                    const heroImageUrl = heroData.icon;
+                    const action = player.banning ? 'Banning' : 'Picking'
+                    const playerName = player.name;
                     const playerPos = player.pos;
+                    // console.log('heroData', heroData)
 
-                    console.log(`Active Player: ${playerName}, Pos: ${playerPos}, Action: ${action}, Hero: ${heroName}`);
+                    console.log(`Active Player: ${playerName}, Pos: ${playerPos}, Action: ${action}, Hero: ${heroName} `);
 
-                    
+
                     updateVMixOverlay(playerPos, playerName, action, heroImageUrl);
                 }
             });
@@ -168,18 +203,19 @@ const getHeroData = async (heroid) => {
 };
 
 const updateVMixOverlay = (playerPos, playerName, action, heroImageUrl) => {
+    console.log('action', action)
     const vMixInput = playerPositionToVMixInput[playerPos];
     if (!vMixInput) {
         console.error(`No vMix input mapped for player position: ${playerPos}`);
         return;
     }
-    
+
     switch (action) {
         case 'Picking':
-            sendVMixCommand(`SetImage&Input=${vMixInput}&SelectedName=HeroImage&Value=${heroImageUrl}`);
+            sendVMixCommand(`SetImage&Input=${vMixInput}&SelectedName=${playerPos > 5 ? 'pickdo' : 'pickxanh'}${playerPos > 5 ? playerPos - 5 : playerPos}.Source&Value=${heroImageUrl}`);
             break;
         case 'Banning':
-            sendVMixCommand(`SetImage&Input=${vMixInput}&SelectedName=HeroImage&Value=${heroImageUrl}`);
+            sendVMixCommand(`SetImage&Input=${vMixInput}&SelectedName=${playerPos > 5 ? 'bando' : 'banxanh'}${playerPos > 5 ? playerPos - 5 : playerPos}.Source&Value=${heroImageUrl}`);
             break;
         default:
             console.error(`Unknown action: ${action}`);
@@ -188,6 +224,7 @@ const updateVMixOverlay = (playerPos, playerName, action, heroImageUrl) => {
 };
 
 const sendVMixCommand = (command) => {
+    console.log('command', command)
     axios.get(`http://localhost:8088/api/?Function=${command}`).then((response) => {
         console.log(`vMix command sent: ${command}`);
     }).catch((error) => {

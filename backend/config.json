@@ -1,24 +1,24 @@
 {
     "authkey": "",
-    "matchId": "",
+    "matchId": "579554530656606884",
     "pairConfigs": [
         {
-            "Value": "data.state",
+            "Value": "data.camp_list[0].team_name",
             "Function": "SetText",
-            "Input": "d4c74b4a-7df4-45b4-b50f-f91f2fde7dcb",
+            "Input": "2cfcb547-5ca4-4f56-85b4-859f3be3831d",
             "SelectedName": "TextBlock2.Text"
         },
         {
-            "Value": "dataid",
+            "Value": "data.camp_list[1].team_name",
             "Function": "SetText",
-            "Input": "d4c74b4a-7df4-45b4-b50f-f91f2fde7dcb",
+            "Input": "2cfcb547-5ca4-4f56-85b4-859f3be3831d",
             "SelectedName": "TextBlock1.Text"
         },
         {
             "Value": "https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_4f970eb4b44b8c9fff2c511d8e856ff4.png",
             "Function": "SetImage",
-            "Input": "d4c74b4a-7df4-45b4-b50f-f91f2fde7dcb",
-            "SelectedName": "Player1.Source"
+            "Input": "2cfcb547-5ca4-4f56-85b4-859f3be3831d",
+            "SelectedName": "pickxanh2.Source"
         }
     ]
 }

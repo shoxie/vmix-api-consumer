@@ -41,6 +41,9 @@ const Home = () => {
               <Box>
                 <ConfigModal matchData={match.data} />
               </Box>
+              <Box>
+                <Text>{match.data.battleid}</Text>
+              </Box>
             </VStack>
           </GridItem>
         ))}
