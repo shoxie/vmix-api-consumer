@@ -3,7 +3,7 @@ const axios = require('axios');
 const _ = require('lodash');
 const { ConnectionTCP } = require('node-vmix')
 const { XmlApi } = require('vmix-js-utils')
-
+const cloudinary = require('cloudinary').v2;
 const config = require('./config.json');
 
 var dataid = 1000;
@@ -29,17 +29,23 @@ connection.on('connect', () => {
     connection.send('XML')
 })
 
+cloudinary.config({ 
+    cloud_name: 'dgwxadfh7', 
+    api_key: '', 
+    api_secret: '' // Click 'View API Keys' above to copy your API secret
+});
+// CLOUDINARY_URL=cloudinary://914164364216995:l_OvqBX4EhF0-0cO9KWXHxBQ77I@dgwxadfh7
 const playerPositionToVMixInput = {
-    1: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
-    2: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
-    3: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
-    4: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
-    5: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
-    6: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
-    7: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
-    8: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
-    9: '2cfcb547-5ca4-4f56-85b4-859f3be3831d',
-    10: '2cfcb547-5ca4-4f56-85b4-859f3be3831d'
+    1: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
+    2: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
+    3: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
+    4: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
+    5: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
+    6: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
+    7: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
+    8: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
+    9: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9',
+    10: 'a2f2ebc0-6822-4f12-8702-5c3069b12ef9'
 };
 
 var banList = [];
@@ -82,7 +88,7 @@ const beginLiveMatch = async (matchId) => {
             // console.error(error)
             isInvalidMatch = true;
         })
-    }, 5000)
+    }, 3000)
 }
 
 const stopLiveMatch = () => {
@@ -171,7 +177,7 @@ const handleMatchEvent = async (event, matchData) => {
                 console.log('heroId', heroId)
 
                 if (heroId !== 0) {
-                    const { data: heroData } = await getHeroData(heroId);
+                    const heroData = await getHeroData(heroId);
                     const heroName = heroData.hero_name;
                     const heroImageUrl = heroData.icon;
                     const action = player.banning ? 'Banning' : 'Picking'
@@ -179,10 +185,10 @@ const handleMatchEvent = async (event, matchData) => {
                     const playerPos = player.pos;
                     // console.log('heroData', heroData)
 
-                    console.log(`Active Player: ${playerName}, Pos: ${playerPos}, Action: ${action}, Hero: ${heroName} `);
+                    // console.log(`Active Player: ${playerName}, Pos: ${playerPos}, Action: ${action}, Hero: ${heroName} `);
 
 
-                    updateVMixOverlay(playerPos, playerName, action, heroImageUrl);
+                    updateVMixOverlay(playerPos, playerName, action, action === 'Banning' ? heroImageUrl : heroData.portrait);
                 }
             });
         });
@@ -199,7 +205,11 @@ const handleMatchEvent = async (event, matchData) => {
 const getHeroData = async (heroid) => {
     heroid = heroid.toString().padStart(3, '0');
     const response = await axios.get(`https://mlbb-wiki-api.vercel.app/api/heroes/HE${heroid}`);
-    return response.data;
+    // get full image using cloudinary
+    const heroPortraitURL = cloudinary.url(`${heroid}`);
+    const temp = { ...response.data.data, portrait: heroPortraitURL };
+    // console.log('temp', temp)
+    return temp;
 };
 
 const updateVMixOverlay = (playerPos, playerName, action, heroImageUrl) => {
