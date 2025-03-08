@@ -1,6 +1,9 @@
 {
     "authkey": "",
-    "matchId": "579514720604740121",
+    "matchId": "470785527562467081",
+    "cloud_name": "",
+    "cloudinary_api_key": "",
+    "cloudinary_api_secret": "",
     "pairConfigs": [
         {
             "Value": "data.camp_list[0].team_name",

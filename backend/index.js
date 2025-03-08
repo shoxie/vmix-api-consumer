@@ -29,10 +29,10 @@ connection.on('connect', () => {
     connection.send('XML')
 })
 
-cloudinary.config({ 
-    cloud_name: 'dgwxadfh7', 
-    api_key: '', 
-    api_secret: '' // Click 'View API Keys' above to copy your API secret
+cloudinary.config({
+    cloud_name: config.cloud_name,
+    api_key: config.cloudinary_api_key,
+    api_secret: config.cloudinary_api_secret // Click 'View API Keys' above to copy your API secret
 });
 // CLOUDINARY_URL=cloudinary://914164364216995:l_OvqBX4EhF0-0cO9KWXHxBQ77I@dgwxadfh7
 const playerPositionToVMixInput = {
@@ -153,30 +153,29 @@ const handleMatchEvent = async (event, matchData) => {
     }
 
     if (event === 'ban' || event === 'pick') {
-        // const camp_list_1 = matchData.camp_list[0];
-        // const camp_list_2 = matchData.camp_list[1];
-
-        // // get newly added ban hero
-        // const newBanHero = _.difference(camp_list_1.ban_hero_list, banList);
-        // if (newBanHero.length > 0) {
-        //     banList.push(newBanHero[0]);
-        //     console.log('ban hero', newBanHero[0]);
-        // }
-        // // get newly added ban hero
-        // const newBanHero2 = _.difference(camp_list_2.ban_hero_list, banList);
-        // if (newBanHero2.length > 0) {
-        //     banList.push(newBanHero2[0]);
-        //     console.log('ban hero', newBanHero2[0]);
-        // }
-        // console.log('matchData', matchData)
         matchData.camp_list.forEach(camp => {
+            // retrive banned list
+            const bannedList = camp.ban_hero_list;
+            // update vmix overlay
+            if (Array.isArray(bannedList) && bannedList.length > 0) {
+                bannedList.forEach(async (heroId, index) => {
+                    const heroData = await getHeroData(heroId);
+                    const heroName = heroData.hero_name;
+                    const heroImageUrl = heroData.icon;
+                    const action = 'Banning'
+                    const playerName = 'N/A';
+                    // camp_list 1 is team 1, camp_list 2 is team 2. the position to set is based on the item position in the array + 1
+                    
+                    const playerPos = camp.id === 1 ? index + 1 : index + 5;
+                    updateVMixOverlay(playerPos, playerName, action, heroImageUrl);
+                });
+            }
             camp.player_list.forEach(async player => {
                 // console.log('player', player)
                 const heroId = player.picking ? player.heroid : player.ban_heroid;
 
-                console.log('heroId', heroId)
-
                 if (heroId !== 0) {
+                    console.log('heroId', heroId)
                     const heroData = await getHeroData(heroId);
                     const heroName = heroData.hero_name;
                     const heroImageUrl = heroData.icon;
@@ -185,7 +184,7 @@ const handleMatchEvent = async (event, matchData) => {
                     const playerPos = player.pos;
                     // console.log('heroData', heroData)
 
-                    // console.log(`Active Player: ${playerName}, Pos: ${playerPos}, Action: ${action}, Hero: ${heroName} `);
+                    console.log(`Active Player: ${playerName}, Pos: ${playerPos}, Action: ${action}, Hero: ${heroName} `);
 
 
                     updateVMixOverlay(playerPos, playerName, action, action === 'Banning' ? heroImageUrl : heroData.portrait);
@@ -198,7 +197,11 @@ const handleMatchEvent = async (event, matchData) => {
     // if (event === 'pick') {
     // }
 
-    if (event === 'playing') {
+    if (event === 'play') {
+
+        matchData.camp_list.forEach(camp => {
+
+        });
     }
 }
 
@@ -262,6 +265,17 @@ const getLiveMatch = () => {
     })
 }
 
+const clearImageInputs = () => {
+    for (let i = 1; i <= 5; i++) {
+        sendVMixCommand(`SetImage&Input=${playerPositionToVMixInput[1]}&SelectedName=pickxanh${i}.Source&Value=`);
+        sendVMixCommand(`SetImage&Input=${playerPositionToVMixInput[1]}&SelectedName=pickdo${i}.Source&Value=`);
+        sendVMixCommand(`SetImage&Input=${playerPositionToVMixInput[1]}&SelectedName=bando${i}.Source&Value=`);
+        sendVMixCommand(`SetImage&Input=${playerPositionToVMixInput[1]}&SelectedName=banxanh${i}.Source&Value=`);
+    }
+}
+
 // getLiveMatch();
+
+clearImageInputs();
 
 beginLiveMatch(config.matchId);
