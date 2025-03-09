@@ -20,7 +20,7 @@ connection.on('xml', (xmlData) => {
     const inputsRawData = XmlApi.Inputs.extractInputsFromXML(xmlContent)
     const inputs = XmlApi.Inputs.map(inputsRawData)
 
-    console.log(inputs)
+    // console.log(inputs)
 })
 
 connection.on('connect', () => {
@@ -29,23 +29,23 @@ connection.on('connect', () => {
     connection.send('XML')
 })
 
-cloudinary.config({
-    cloud_name: config.cloud_name,
-    api_key: config.cloudinary_api_key,
-    api_secret: config.cloudinary_api_secret // Click 'View API Keys' above to copy your API secret
+cloudinary.config({ 
+    cloud_name: config.cloud_name, 
+    api_key: config.cloudinary_api_key, 
+    api_secret: config.cloudinary_api_secret
 });
-// CLOUDINARY_URL=cloudinary://914164364216995:l_OvqBX4EhF0-0cO9KWXHxBQ77I@dgwxadfh7
+
 const playerPositionToVMixInput = {
-    1: '1146c7b0-c453-4cde-9af8-07523c3f9942',
-    2: '1146c7b0-c453-4cde-9af8-07523c3f9942',
-    3: '1146c7b0-c453-4cde-9af8-07523c3f9942',
-    4: '1146c7b0-c453-4cde-9af8-07523c3f9942',
-    5: '1146c7b0-c453-4cde-9af8-07523c3f9942',
-    6: '1146c7b0-c453-4cde-9af8-07523c3f9942',
-    7: '1146c7b0-c453-4cde-9af8-07523c3f9942',
-    8: '1146c7b0-c453-4cde-9af8-07523c3f9942',
-    9: '1146c7b0-c453-4cde-9af8-07523c3f9942',
-    10: '1146c7b0-c453-4cde-9af8-07523c3f9942'
+    1: '34d85afb-2310-4a46-8e32-47100df06500',
+    2: '34d85afb-2310-4a46-8e32-47100df06500',
+    3: '34d85afb-2310-4a46-8e32-47100df06500',
+    4: '34d85afb-2310-4a46-8e32-47100df06500',
+    5: '34d85afb-2310-4a46-8e32-47100df06500',
+    6: '34d85afb-2310-4a46-8e32-47100df06500',
+    7: '34d85afb-2310-4a46-8e32-47100df06500',
+    8: '34d85afb-2310-4a46-8e32-47100df06500',
+    9: '34d85afb-2310-4a46-8e32-47100df06500',
+    10: '34d85afb-2310-4a46-8e32-47100df06500'
 };
 
 var banList = [];
@@ -74,7 +74,7 @@ const beginLiveMatch = async (matchId) => {
             handleMatchEvent(response.data.data.state, response.data.data);
 
             dataid = response.data.dataid;
-            console.log('response.data.dataid', response.data.dataid)
+            // console.log('response.data.dataid', response.data.data.camp_list[0])
 
             if (!isTeamNameUpdated) {
                 isTeamNameUpdated = true;
@@ -96,7 +96,7 @@ const stopLiveMatch = () => {
 }
 
 const VMixUrlConstructor = (config, data) => {
-    // http://127.0.0.1:8088/API/?Function=Fade&Duration=1000&Input=877bb3e7-58bd-46a1-85ce-0d673aec6bf5
+    // http://127.0.0.1:8088/API/?Input=877bb3e7-58bd-46a1-85ce-0d673aec6bf5
     const baseUrl = 'http://localhost:8088/api';
     const functionString = config.Function;
     const inputString = config.Input;
@@ -123,8 +123,10 @@ const VMixUrlConstructor = (config, data) => {
 }
 
 const updateTeamName = (teamName1, teamName2) => {
-    sendVMixCommand(`SetText&Input=${playerPositionToVMixInput[1]}&SelectedName=TextBlock2.Text&Value=${teamName1}`);
-    sendVMixCommand(`SetText&Input=${playerPositionToVMixInput[2]}&SelectedName=TextBlock1.Text&Value=${teamName2}`);
+    const redTeamInput = "34d85afb-2310-4a46-8e32-47100df06500";  // Replace with the actual vMix input ID/name
+    const blueTeamInput = "34d85afb-2310-4a46-8e32-47100df06500";  // Replace with the actual vMix input ID/name
+    sendVMixCommand(`SetText&Input=${redTeamInput}&SelectedName=doired.Text&Value=${encodeURIComponent(teamName1)}`);
+    sendVMixCommand(`SetText&Input=${blueTeamInput}&SelectedName=doiblue.Text&Value=${encodeURIComponent(teamName2)}`);
 }
 
 const updateBanList = async (camp_list_1, camp_list_2) => {
@@ -147,63 +149,41 @@ const updateBanList = async (camp_list_1, camp_list_2) => {
 
 const handleMatchEvent = async (event, matchData) => {
     if (event === 'init') {
+        console.log("Match initialized.");
     }
 
     if (event === 'start') {
+        console.log("Match started.");
     }
 
     if (event === 'ban' || event === 'pick') {
         matchData.camp_list.forEach(camp => {
-            // retrive banned list
-            const bannedList = camp.ban_hero_list;
-            // update vmix overlay
-            if (Array.isArray(bannedList) && bannedList.length > 0) {
-                bannedList.forEach(async (heroId, index) => {
-                    const heroData = await getHeroData(heroId);
-                    const heroName = heroData.hero_name;
-                    const heroImageUrl = heroData.icon;
-                    const action = 'Banning'
-                    const playerName = 'N/A';
-                    // camp_list 1 is team 1, camp_list 2 is team 2. the position to set is based on the item position in the array + 1
-                    
-                    const playerPos = camp.id === 1 ? index + 1 : index + 5;
-                    updateVMixOverlay(playerPos, playerName, action, heroImageUrl);
-                });
-            }
             camp.player_list.forEach(async player => {
-                // console.log('player', player)
-                const heroId = player.picking ? player.heroid : player.ban_heroid;
+                const heroId = event === 'ban' ? player.ban_heroid : player.heroid;
+                if (!heroId || heroId === 0) return;
 
-                if (heroId !== 0) {
-                    console.log('heroId', heroId)
-                    const heroData = await getHeroData(heroId);
-                    const heroName = heroData.hero_name;
-                    const heroImageUrl = heroData.icon;
-                    const action = player.banning ? 'Banning' : 'Picking'
-                    const playerName = player.name;
-                    const playerPos = player.pos;
-                    // console.log('heroData', heroData)
+                const heroData = await getHeroData(heroId);
+                const heroImageUrl = event === 'ban' ? heroData.icon : heroData.portrait;
+                const action = event === 'ban' ? 'Banning' : 'Picking';
+                const playerName = player.name;
+                const playerPos = player.pos;
 
-                    console.log(`Active Player: ${playerName}, Pos: ${playerPos}, Action: ${action}, Hero: ${heroName} `);
+                console.log(`Action: ${action}, Player: ${playerName}, Pos: ${playerPos}, Hero: ${heroData.hero_name}`);
 
-
-                    updateVMixOverlay(playerPos, playerName, action, action === 'Banning' ? heroImageUrl : heroData.portrait);
-                }
+                updateVMixOverlay(playerPos, playerName, action, heroImageUrl);
             });
         });
-
-    }
-
-    // if (event === 'pick') {
-    // }
+    };
 
     if (event === 'play') {
-
-        matchData.camp_list.forEach(camp => {
-
-        });
+        console.log("Match is now playing.");
+        sendDataToVMix(matchData);
     }
-}
+    if (event === 'end') { // Assuming 'end' is the event when the match finishes
+        console.log("Match ended. Resetting vMix overlay...");
+        resetVMixOverlay();
+    }
+};
 
 const getHeroData = async (heroid) => {
     const paddedHeroid = heroid.toString().padStart(3, '0');
@@ -216,24 +196,26 @@ const getHeroData = async (heroid) => {
 };
 
 const updateVMixOverlay = (playerPos, playerName, action, heroImageUrl) => {
-    console.log('action', action)
+    console.log('action', action);
     const vMixInput = playerPositionToVMixInput[playerPos];
+
     if (!vMixInput) {
         console.error(`No vMix input mapped for player position: ${playerPos}`);
         return;
     }
 
-    switch (action) {
-        case 'Picking':
-            sendVMixCommand(`SetImage&Input=${vMixInput}&SelectedName=${playerPos > 5 ? 'pickdo' : 'pickxanh'}${playerPos > 5 ? playerPos - 5 : playerPos}.Source&Value=${heroImageUrl}`);
-            break;
-        case 'Banning':
-            sendVMixCommand(`SetImage&Input=${vMixInput}&SelectedName=${playerPos > 5 ? 'bando' : 'banxanh'}${playerPos > 5 ? playerPos - 5 : playerPos}.Source&Value=${heroImageUrl}`);
-            break;
-        default:
-            console.error(`Unknown action: ${action}`);
-            break;
+    let selectedName = '';
+
+    if (action === 'Picking') {
+        selectedName = playerPos > 5 ? `pickdo${playerPos - 5}` : `pickxanh${playerPos}`;
+    } else if (action === 'Banning') {
+        selectedName = playerPos > 5 ? `bando${playerPos - 5}` : `banxanh${playerPos}`;
+    } else {
+        console.error(`Unknown action: ${action}`);
+        return;
     }
+
+    sendVMixCommand(`SetImage&Input=${vMixInput}&SelectedName=${selectedName}.Source&Value=${heroImageUrl}`);
 };
 
 const sendVMixCommand = (command) => {
@@ -247,14 +229,30 @@ const sendVMixCommand = (command) => {
 
 const sendDataToVMix = async (data) => {
     axios.all(config.pairConfigs.map(item => {
+        console.log('data', data)
+        // console.log(item.Value, ' data: ', _.get(data, item.Value, ''))
         console.table(Object.assign(item, { TargetValue: _.get(data, item.Value, '') }))
         return axiosClient.get(VMixUrlConstructor(item, data), item)
     })).then(axios.spread((...responses) => {
         for (let i = 0; i < responses.length; i++) {
-            console.log(responses[i].data)
+            // console.log(responses[i].data)
         }
     }))
 }
+
+const resetVMixOverlay = () => {
+    console.log('Resetting vMix overlay...');
+
+    for (let playerPos = 1; playerPos <= 10; playerPos++) {
+        const vMixInput = playerPositionToVMixInput[playerPos];
+        if (!vMixInput) continue;
+
+        sendVMixCommand(`SetImage&Input=${vMixInput}&SelectedName=${playerPos > 5 ? 'pickdo' : 'pickxanh'}${playerPos > 5 ? playerPos - 5 : playerPos}.Source&Value=`);
+        sendVMixCommand(`SetImage&Input=${vMixInput}&SelectedName=${playerPos > 5 ? 'bando' : 'banxanh'}${playerPos > 5 ? playerPos - 5 : playerPos}.Source&Value=`);
+    }
+
+    console.log('vMix overlay reset complete.');
+};
 
 const getLiveMatch = () => {
     axiosClient.get(`/battlelist/playing`).then(response => {
@@ -265,17 +263,8 @@ const getLiveMatch = () => {
     })
 }
 
-const clearImageInputs = () => {
-    for (let i = 1; i <= 5; i++) {
-        sendVMixCommand(`SetImage&Input=${playerPositionToVMixInput[1]}&SelectedName=pickxanh${i}.Source&Value=`);
-        sendVMixCommand(`SetImage&Input=${playerPositionToVMixInput[1]}&SelectedName=pickdo${i}.Source&Value=`);
-        sendVMixCommand(`SetImage&Input=${playerPositionToVMixInput[1]}&SelectedName=bando${i}.Source&Value=`);
-        sendVMixCommand(`SetImage&Input=${playerPositionToVMixInput[1]}&SelectedName=banxanh${i}.Source&Value=`);
-    }
-}
-
 // getLiveMatch();
 
-clearImageInputs();
-
 beginLiveMatch(config.matchId);
+
+

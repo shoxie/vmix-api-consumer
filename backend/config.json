@@ -1,27 +1,141 @@
 {
-    "authkey": "",
-    "matchId": "470785527562467081",
+    "authkey": "88e68bc714f19d09a929eb203ee19d9f",
+    "matchId": "242423533774115282",
     "cloud_name": "",
     "cloudinary_api_key": "",
     "cloudinary_api_secret": "",
     "pairConfigs": [
         {
-            "Value": "data.camp_list[0].team_name",
-            "Function": "SetText",
-            "Input": "2cfcb547-5ca4-4f56-85b4-859f3be3831d",
-            "SelectedName": "TextBlock2.Text"
-        },
-        {
             "Value": "data.camp_list[1].team_name",
             "Function": "SetText",
-            "Input": "2cfcb547-5ca4-4f56-85b4-859f3be3831d",
-            "SelectedName": "TextBlock1.Text"
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "teamdo.Text"
         },
         {
-            "Value": "https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_4f970eb4b44b8c9fff2c511d8e856ff4.png",
-            "Function": "SetImage",
-            "Input": "2cfcb547-5ca4-4f56-85b4-859f3be3831d",
-            "SelectedName": "pickxanh2.Source"
+            "Value": "camp_list[1].score",
+            "Function": "SetText",
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "tisodo.Text"
+        },
+        {
+            "Value": "camp_list[1].total_money",
+            "Function": "SetText",
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "vangdo.Text"
+        },
+        {
+            "Value": "camp_list[1].kill_tower",
+            "Function": "SetText",
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "trudo.Text"
+        },
+        {
+            "Value": "camp_list[1].kill_lord",
+            "Function": "SetText",
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "lorddo.Text"
+        },
+        {
+            "Value": "camp_list[1].kill_tortoise",
+            "Function": "SetText",
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "ruado.Text"
+        },
+        {
+            "Value": "camp_list[0].team_name",
+            "Function": "SetText",
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "teamxanh.Text"
+        },
+        {
+            "Value": "camp_list[0].score",
+            "Function": "SetText",
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "tisoxanh.Text"
+        },
+        {
+            "Value": "camp_list[0].total_money",
+            "Function": "SetText",
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "vangxanh.Text"
+        },
+        {
+            "Value": "camp_list[0].kill_tower",
+            "Function": "SetText",
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "truxanh.Text"
+        },
+        {
+            "Value": "camp_list[0].kill_lord",
+            "Function": "SetText",
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "lordxanh.Text"
+        },
+        {
+            "Value": "camp_list[0].kill_tortoise",
+            "Function": "SetText",
+            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "SelectedName": "ruaxanh.Text"
+        },
+        {
+            "Value": "camp_list[0].team_name",
+            "Function": "SetText",
+            "Input": "34d85afb-2310-4a46-8e32-47100df06500",
+            "SelectedName": "doiblue.Text"
+        },
+        {
+            "Value": "camp_list[1].team_name",
+            "Function": "SetText",
+            "Input": "34d85afb-2310-4a46-8e32-47100df06500",
+            "SelectedName": "doired.Text"
+        },
+        {
+            "Value": "data.camp_list[0].player_list[0].kill_num",
+            "Function": "SetText",
+            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
+            "SelectedName": "Kill1.Text"
+        },
+        {
+            "Value": "data.camp_list[0].player_list[0].assist_num",
+            "Function": "SetText",
+            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
+            "SelectedName": "Assit1.Text"
+        },
+        {
+            "Value": "data.camp_list[0].player_list[0].dead_num",
+            "Function": "SetText",
+            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
+            "SelectedName": "Death1.Text"
+        },
+        {
+            "Value": "data.camp_list[0].player_list[0].gold",
+            "Function": "SetText",
+            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
+            "SelectedName": "gold1.Text"
+        },
+        {
+            "Value": "data.camp_list[0].player_list[2].kill_num",
+            "Function": "SetText",
+            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
+            "SelectedName": "Kill2.Text"
+        },
+        {
+            "Value": "data.camp_list[0].player_list[2].assist_num",
+            "Function": "SetText",
+            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
+            "SelectedName": "Assit2.Text"
+        },
+        {
+            "Value": "data.camp_list[0].player_list[2].dead_num",
+            "Function": "SetText",
+            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
+            "SelectedName": "Death2.Text"
+        },
+        {
+            "Value": "data.camp_list[0].player_list[2].gold",
+            "Function": "SetText",
+            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
+            "SelectedName": "gold2.Text"
         }
     ]
 }
