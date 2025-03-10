@@ -1,141 +1,186 @@
 {
-    "authkey": "88e68bc714f19d09a929eb203ee19d9f",
-    "matchId": "242423533774115282",
+    "authkey": "",
+    "matchId": "647228354655589822",
     "cloud_name": "",
     "cloudinary_api_key": "",
     "cloudinary_api_secret": "",
-    "pairConfigs": [
-        {
-            "Value": "data.camp_list[1].team_name",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "teamdo.Text"
+    "team_1": {
+        "play_phase": {
+            "GUID": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "keyPairs": [
+                {
+                    "Value": "camp_list[1].score",
+                    "Function": "SetText",
+                    "SelectedName": "tisodo"
+                },
+                {
+                    "Value": "camp_list[1].total_money",
+                    "Function": "SetText",
+                    "SelectedName": "vangdo"
+                },
+                {
+                    "Value": "camp_list[1].kill_tower",
+                    "Function": "SetText",
+                    "SelectedName": "trudo"
+                },
+                {
+                    "Value": "camp_list[1].kill_lord",
+                    "Function": "SetText",
+                    "SelectedName": "lorddo"
+                },
+                {
+                    "Value": "camp_list[1].kill_tortoise",
+                    "Function": "SetText",
+                    "SelectedName": "ruado"
+                },
+                {
+                    "Value": "camp_list[1].team_name",
+                    "Function": "SetText",
+                    "SelectedName": "teamdo"
+                }
+            ]
         },
-        {
-            "Value": "camp_list[1].score",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "tisodo.Text"
+        "ban_phase": {
+            "GUID": "34d85afb-2310-4a46-8e32-47100df06500",
+            "keyPairs": [
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "banxanh1"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "banxanh2"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "banxanh3"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "banxanh4"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "banxanh5"
+                }
+            ]
         },
-        {
-            "Value": "camp_list[1].total_money",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "vangdo.Text"
-        },
-        {
-            "Value": "camp_list[1].kill_tower",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "trudo.Text"
-        },
-        {
-            "Value": "camp_list[1].kill_lord",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "lorddo.Text"
-        },
-        {
-            "Value": "camp_list[1].kill_tortoise",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "ruado.Text"
-        },
-        {
-            "Value": "camp_list[0].team_name",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "teamxanh.Text"
-        },
-        {
-            "Value": "camp_list[0].score",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "tisoxanh.Text"
-        },
-        {
-            "Value": "camp_list[0].total_money",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "vangxanh.Text"
-        },
-        {
-            "Value": "camp_list[0].kill_tower",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "truxanh.Text"
-        },
-        {
-            "Value": "camp_list[0].kill_lord",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "lordxanh.Text"
-        },
-        {
-            "Value": "camp_list[0].kill_tortoise",
-            "Function": "SetText",
-            "Input": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
-            "SelectedName": "ruaxanh.Text"
-        },
-        {
-            "Value": "camp_list[0].team_name",
-            "Function": "SetText",
-            "Input": "34d85afb-2310-4a46-8e32-47100df06500",
-            "SelectedName": "doiblue.Text"
-        },
-        {
-            "Value": "camp_list[1].team_name",
-            "Function": "SetText",
-            "Input": "34d85afb-2310-4a46-8e32-47100df06500",
-            "SelectedName": "doired.Text"
-        },
-        {
-            "Value": "data.camp_list[0].player_list[0].kill_num",
-            "Function": "SetText",
-            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
-            "SelectedName": "Kill1.Text"
-        },
-        {
-            "Value": "data.camp_list[0].player_list[0].assist_num",
-            "Function": "SetText",
-            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
-            "SelectedName": "Assit1.Text"
-        },
-        {
-            "Value": "data.camp_list[0].player_list[0].dead_num",
-            "Function": "SetText",
-            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
-            "SelectedName": "Death1.Text"
-        },
-        {
-            "Value": "data.camp_list[0].player_list[0].gold",
-            "Function": "SetText",
-            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
-            "SelectedName": "gold1.Text"
-        },
-        {
-            "Value": "data.camp_list[0].player_list[2].kill_num",
-            "Function": "SetText",
-            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
-            "SelectedName": "Kill2.Text"
-        },
-        {
-            "Value": "data.camp_list[0].player_list[2].assist_num",
-            "Function": "SetText",
-            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
-            "SelectedName": "Assit2.Text"
-        },
-        {
-            "Value": "data.camp_list[0].player_list[2].dead_num",
-            "Function": "SetText",
-            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
-            "SelectedName": "Death2.Text"
-        },
-        {
-            "Value": "data.camp_list[0].player_list[2].gold",
-            "Function": "SetText",
-            "Input": "d26f458f-ced0-4635-9959-fcad7af8ad58",
-            "SelectedName": "gold2.Text"
+        "pick_phase": {
+            "GUID": "34d85afb-2310-4a46-8e32-47100df06500",
+            "keyPairs": [
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "pickxanh1"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "pickxanh2"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "pickxanh3"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "pickxanh4"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "pickxanh5"
+                }
+            ]
         }
-    ]
+    },
+    "team_2": {
+        "play_phase": {
+            "GUID": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "keyPairs": [
+                {
+                    "Value": "camp_list[0].team_name",
+                    "Function": "SetText",
+                    "SelectedName": "teamxanh"
+                },
+                {
+                    "Value": "camp_list[0].score",
+                    "Function": "SetText",
+                    "SelectedName": "tisoxanh"
+                },
+                {
+                    "Value": "camp_list[0].total_money",
+                    "Function": "SetText",
+                    "SelectedName": "vangxanh"
+                },
+                {
+                    "Value": "camp_list[0].kill_tower",
+                    "Function": "SetText",
+                    "SelectedName": "truxanh"
+                },
+                {
+                    "Value": "camp_list[0].kill_lord",
+                    "Function": "SetText",
+                    "SelectedName": "lordxanh"
+                },
+                {
+                    "Value": "camp_list[0].kill_tortoise",
+                    "Function": "SetText",
+                    "SelectedName": "ruaxanh"
+                },
+                {
+                    "Value": "camp_list[0].team_name",
+                    "Function": "SetText",
+                    "SelectedName": "doiblue"
+                }
+            ]
+        },
+        "ban_phase": {
+            "GUID": "34d85afb-2310-4a46-8e32-47100df06500",
+            "keyPairs": [
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "bando1"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "bando2"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "bando3"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "bando4"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "bando5"
+                }
+            ]
+        },
+        "pick_phase": {
+            "GUID": "34d85afb-2310-4a46-8e32-47100df06500",
+            "keyPairs": [
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "pickdo1"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "pickdo2"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "pickdo3"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "pickdo4"
+                },
+                {
+                    "Function": "SetImage",
+                    "SelectedName": "pickdo5"
+                }
+            ]
+        }
+    }
 }
