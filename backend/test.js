@@ -3,7 +3,8 @@ const _ = require('lodash');
 const axios = require('axios');
 var { connection, cloudinary, dataid, isInvalidMatch, isTeamNameUpdated, isBanListUpdated, internalClient, externalClient, config } = require('./init');
 var matchInterval;
-
+var pickedPlayer = [];
+var bannedHeroes = [];
 
 const beginLiveMatch = async (matchId) => {
     if (isInvalidMatch) {
@@ -44,6 +45,7 @@ const handleMatchEvent = async (event, matchData) => {
     if (event === 'pick') {
         matchData.camp_list.forEach(camp => {
             camp.player_list.forEach(async player => {
+                if (pickedPlayer.includes(player.pos)) return;
                 const heroId = player.heroid;
                 if (!heroId || heroId === 0) return;
 
@@ -57,6 +59,7 @@ const handleMatchEvent = async (event, matchData) => {
 
                 // console.log(`Action: ${action}, Player: ${playerName}, Pos: ${playerPos}, Hero: ${heroData.hero_name}`);
                 processCommand(heroImageUrl, vMixConfig, vMixGuid);
+                pickedPlayer.push(playerPos);
             });
         });
     };
@@ -71,6 +74,7 @@ const handleMatchEvent = async (event, matchData) => {
 
             // banned_hero_list
             camp.ban_hero_list.forEach(async (heroId, index) => {
+                if (bannedHeroes.includes(heroId)) return;
                 const heroData = await getHeroData(heroId);
                 const heroImageUrl = heroData.icon;
                 const action = 'Banning';
@@ -81,6 +85,7 @@ const handleMatchEvent = async (event, matchData) => {
                 console.log('1', vMixConfig, playerPos)
                 // console.log(`Action: ${action}, Player: ${playerName}, Pos: ${playerPos}, Hero: ${heroData.hero_name}`);
                 processCommand(heroImageUrl, vMixConfig, vMixGuid);
+                bannedHeroes.push(heroId);
             });
         })
     }
