@@ -52,7 +52,7 @@ const handleMatchEvent = async (event, matchData) => {
                 const action = 'Picking';
                 const playerName = player.name;
                 const playerPos = player.pos;
-                const vMixConfig = config[`team_` + camp.campid][`pick` + "_phase"].keyPairs[playerPos - 1];
+                const vMixConfig = config[`team_` + camp.campid][`pick` + "_phase"].keyPairs[playerPos - (playerPos > 5 ? 5 : 0) - 1];
                 const vMixGuid = config[`team_` + camp.campid][`pick` + "_phase"].GUID;
 
                 // console.log(`Action: ${action}, Player: ${playerName}, Pos: ${playerPos}, Hero: ${heroData.hero_name}`);
@@ -74,7 +74,7 @@ const handleMatchEvent = async (event, matchData) => {
                 const action = 'Banning';
                 const playerName = camp.player_list[index].name;
                 const playerPos = index;
-                const vMixConfig = config[`team_` + camp.campid][`ban` + "_phase"].keyPairs[playerPos];
+                const vMixConfig = config[`team_` + camp.campid][`ban` + "_phase"].keyPairs[playerPos - (playerPos > 5 ? 5 : 0) - 1];
                 const vMixGuid = config[`team_` + camp.campid][`ban` + "_phase"].GUID;
 
                 // console.log(`Action: ${action}, Player: ${playerName}, Pos: ${playerPos}, Hero: ${heroData.hero_name}`);
