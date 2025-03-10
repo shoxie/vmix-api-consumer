@@ -29,7 +29,7 @@ const beginLiveMatch = async (matchId) => {
             // console.error(error)
             isInvalidMatch = true;
         })
-    }, 3000)
+    }, 1000)
 }
 
 const handleMatchEvent = async (event, matchData) => {
@@ -66,6 +66,8 @@ const handleMatchEvent = async (event, matchData) => {
             if (!camp.ban_hero_list) return;
 
             if (camp.campid === 5) return;
+            console.log(camp.team_name, config[`team_`+ camp.campid].team_name, config[`team_` + camp.campid][`ban` + "_phase"].GUID)
+            processCommand(camp.team_name, config[`team_`+ camp.campid].team_name, config[`team_` + camp.campid][`ban` + "_phase"].GUID);
 
             // banned_hero_list
             camp.ban_hero_list.forEach(async (heroId, index) => {
@@ -74,9 +76,9 @@ const handleMatchEvent = async (event, matchData) => {
                 const action = 'Banning';
                 const playerName = camp.player_list[index].name;
                 const playerPos = index;
-                const vMixConfig = config[`team_` + camp.campid][`ban` + "_phase"].keyPairs[playerPos - (playerPos > 5 ? 5 : 0) - 1];
-                const vMixGuid = config[`team_` + camp.campid][`ban` + "_phase"].GUID;
-
+                const vMixConfig = config[`team_` + camp.campid][`ban_phase`].keyPairs[playerPos];
+                const vMixGuid = config[`team_` + camp.campid][`ban_phase`].GUID;
+                console.log('1', vMixConfig, playerPos)
                 // console.log(`Action: ${action}, Player: ${playerName}, Pos: ${playerPos}, Hero: ${heroData.hero_name}`);
                 processCommand(heroImageUrl, vMixConfig, vMixGuid);
             });
@@ -145,8 +147,8 @@ const resetVMixOverlay = () => {
     console.log('Resetting vMix overlay...');
 
     for (let playerPos = 1; playerPos <= 10; playerPos++) {
-        updateVMixOverlay(`SetImage&Input=${`34d85afb-2310-4a46-8e32-47100df06500`}&SelectedName=${playerPos > 5 ? 'pickdo' : 'pickxanh'}${playerPos > 5 ? playerPos - 5 : playerPos}.Source&Value=`);
-        updateVMixOverlay(`SetImage&Input=${`34d85afb-2310-4a46-8e32-47100df06500`}&SelectedName=${playerPos > 5 ? 'bando' : 'banxanh'}${playerPos > 5 ? playerPos - 5 : playerPos}.Source&Value=`);
+        updateVMixOverlay(`SetImage&Input=${`f07486a4-26d2-4d05-ad01-e85b69b0da8b`}&SelectedName=${playerPos > 5 ? 'pickdo' : 'pickxanh'}${playerPos > 5 ? playerPos - 5 : playerPos}.Source&Value=`);
+        updateVMixOverlay(`SetImage&Input=${`f07486a4-26d2-4d05-ad01-e85b69b0da8b`}&SelectedName=${playerPos > 5 ? 'bando' : 'banxanh'}${playerPos > 5 ? playerPos - 5 : playerPos}.Source&Value=`);
     }
 
     console.log('vMix overlay reset complete.');

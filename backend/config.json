@@ -1,12 +1,16 @@
 {
     "authkey": "",
-    "matchId": "647228354655589822",
+    "matchId": "442646576877220311",
     "cloud_name": "",
     "cloudinary_api_key": "",
     "cloudinary_api_secret": "",
     "team_1": {
+        "team_name": {
+            "Function": "SetText",
+            "SelectedName": "teamdo"
+        },
         "play_phase": {
-            "GUID": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "GUID": "dab01b37-c48f-491f-a867-145389d75996",
             "keyPairs": [
                 {
                     "Value": "camp_list[1].score",
@@ -41,7 +45,7 @@
             ]
         },
         "ban_phase": {
-            "GUID": "34d85afb-2310-4a46-8e32-47100df06500",
+            "GUID": "f07486a4-26d2-4d05-ad01-e85b69b0da8b",
             "keyPairs": [
                 {
                     "Function": "SetImage",
@@ -66,7 +70,7 @@
             ]
         },
         "pick_phase": {
-            "GUID": "34d85afb-2310-4a46-8e32-47100df06500",
+            "GUID": "f07486a4-26d2-4d05-ad01-e85b69b0da8b",
             "keyPairs": [
                 {
                     "Function": "SetImage",
@@ -92,8 +96,12 @@
         }
     },
     "team_2": {
+        "team_name": {
+            "Function": "SetText",
+            "SelectedName": "teamxanh"
+        },
         "play_phase": {
-            "GUID": "5d43f28e-bd37-4d7a-8de8-f9c5e5529787",
+            "GUID": "dab01b37-c48f-491f-a867-145389d75996",
             "keyPairs": [
                 {
                     "Value": "camp_list[0].team_name",
@@ -124,16 +132,11 @@
                     "Value": "camp_list[0].kill_tortoise",
                     "Function": "SetText",
                     "SelectedName": "ruaxanh"
-                },
-                {
-                    "Value": "camp_list[0].team_name",
-                    "Function": "SetText",
-                    "SelectedName": "doiblue"
                 }
             ]
         },
         "ban_phase": {
-            "GUID": "34d85afb-2310-4a46-8e32-47100df06500",
+            "GUID": "f07486a4-26d2-4d05-ad01-e85b69b0da8b",
             "keyPairs": [
                 {
                     "Function": "SetImage",
@@ -158,7 +161,7 @@
             ]
         },
         "pick_phase": {
-            "GUID": "34d85afb-2310-4a46-8e32-47100df06500",
+            "GUID": "f07486a4-26d2-4d05-ad01-e85b69b0da8b",
             "keyPairs": [
                 {
                     "Function": "SetImage",
